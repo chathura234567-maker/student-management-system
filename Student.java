@@ -7,6 +7,11 @@ public class Student {
         this.id = id;
         this.name = name;
         this.course = course;
+        void updateDetails(String newName, String newCourse) {
+            name = newName;
+            course = newCourse;
+            System.out.println("Student Details Updated!");
+}
     }
 
     void display() {
