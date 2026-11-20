@@ -1,77 +1,95 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
 
-        Student s1 = new Student(101, "Chathurasri", "CSE AIML");
-        Student s2 = new Student(102, "Rahul", "CSE");
+        students.add(new Student(101, "Chathurasri", "CSE AIML"));
+        students.add(new Student(102, "Rahul", "CSE"));
 
-        System.out.println("STUDENT MANAGEMENT SYSTEM");
-        System.out.println("1. Display Students");
-        System.out.println("2. Search Student");
-        System.out.println("3. Add Student");
-        System.out.println("4. Update Student");
+        int choice;
 
-        System.out.print("Enter choice: ");
-        int choice = sc.nextInt();
+        do {
+            System.out.println("\nSTUDENT MANAGEMENT SYSTEM");
+            System.out.println("1. Display Students");
+            System.out.println("2. Search Student");
+            System.out.println("3. Add Student");
+            System.out.println("4. Update Student");
+            System.out.println("5. Delete Student");
+            System.out.println("6. Exit");
 
-        if (choice == 1) {
-            s1.display();
-            s2.display();
-        }
-        else if (choice == 2 || choice == 4) {
+            System.out.print("Enter choice: ");
+            choice = sc.nextInt();
 
-            System.out.print("Enter Student ID: ");
-            int id = sc.nextInt();
-
-            Student s = null;
-
-            if (id == s1.id)
-                s = s1;
-            else if (id == s2.id)
-                s = s2;
-
-            if (s == null) {
-                System.out.println("Student Not Found!");
+            if (choice == 1) {
+                for (Student s : students) {
+                    s.display();
+                }
             }
-            else if (choice == 2) {
-                s.display();
-            }
-            else {
+
+            else if (choice == 3) {
+                System.out.print("Enter ID: ");
+                int id = sc.nextInt();
                 sc.nextLine();
 
-                System.out.print("Enter New Name: ");
+                System.out.print("Enter Name: ");
                 String name = sc.nextLine();
 
-                System.out.print("Enter New Course: ");
+                System.out.print("Enter Course: ");
                 String course = sc.nextLine();
 
-                s.updateDetails(name, course);
-                s.display();
+                students.add(new Student(id, name, course));
+                System.out.println("Student Added!");
             }
-        }
-        else if (choice == 3) {
 
-            System.out.print("Enter ID: ");
-            int id = sc.nextInt();
-            sc.nextLine();
+            else if (choice == 2 || choice == 4 || choice == 5) {
+                System.out.print("Enter Student ID: ");
+                int id = sc.nextInt();
 
-            System.out.print("Enter Name: ");
-            String name = sc.nextLine();
+                Student found = null;
 
-            System.out.print("Enter Course: ");
-            String course = sc.nextLine();
+                for (Student s : students) {
+                    if (s.id == id) {
+                        found = s;
+                        break;
+                    }
+                }
 
-            Student s3 = new Student(id, name, course);
+                if (found == null) {
+                    System.out.println("Student Not Found!");
+                }
+                else if (choice == 2) {
+                    found.display();
+                }
+                else if (choice == 4) {
+                    sc.nextLine();
 
-            System.out.println("Student Added Successfully!");
-            s3.display();
-        }
-        else {
-            System.out.println("Invalid Choice!");
-        }
+                    System.out.print("New Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("New Course: ");
+                    String course = sc.nextLine();
+
+                    found.updateDetails(name, course);
+                }
+                else {
+                    students.remove(found);
+                    System.out.println("Student Deleted!");
+                }
+            }
+
+            else if (choice == 6) {
+                System.out.println("Thank You!");
+            }
+
+            else {
+                System.out.println("Invalid Choice!");
+            }
+
+        } while (choice != 6);
 
         sc.close();
     }
