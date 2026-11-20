@@ -12,6 +12,7 @@ public class Main {
         System.out.println("1. Display Students");
         System.out.println("2. Search Student");
         System.out.println("3. Add Student");
+        System.out.println("4. Update Student");
 
         System.out.print("Enter choice: ");
         int choice = sc.nextInt();
@@ -20,21 +21,41 @@ public class Main {
             s1.display();
             s2.display();
         }
-        else if (choice == 2) {
+        else if (choice == 2 || choice == 4) {
+
             System.out.print("Enter Student ID: ");
             int id = sc.nextInt();
 
+            Student s = null;
+
             if (id == s1.id)
-                s1.display();
+                s = s1;
             else if (id == s2.id)
-                s2.display();
-            else
+                s = s2;
+
+            if (s == null) {
                 System.out.println("Student Not Found!");
+            }
+            else if (choice == 2) {
+                s.display();
+            }
+            else {
+                sc.nextLine();
+
+                System.out.print("Enter New Name: ");
+                String name = sc.nextLine();
+
+                System.out.print("Enter New Course: ");
+                String course = sc.nextLine();
+
+                s.updateDetails(name, course);
+                s.display();
+            }
         }
         else if (choice == 3) {
+
             System.out.print("Enter ID: ");
             int id = sc.nextInt();
-
             sc.nextLine();
 
             System.out.print("Enter Name: ");
